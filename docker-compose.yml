@@ -1,0 +1,15 @@
+services:
+
+  # Caddy веб-сервер с автоматическим HTTPS
+  caddy:
+    image: caddy:2.8-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+      - ./frontend:/usr/share/caddy/frontend:ro
+    restart: always
+
