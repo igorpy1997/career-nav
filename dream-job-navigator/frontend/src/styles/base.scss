@@ -1,0 +1,110 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family;
+  line-height: 1.6;
+  color: $text-dark;
+  background: $white;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+// Общие стили для кнопок
+.btn {
+  padding: 15px 35px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  &:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+
+  &-primary {
+    background: linear-gradient(135deg, $primary-blue, $secondary-blue);
+    color: $dark;
+    box-shadow: 0 10px 30px rgba($primary-blue, 0.3);
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba($primary-blue, 0.5);
+    }
+  }
+
+  &-outline {
+    background: transparent;
+    color: $primary-blue;
+    border: 2px solid $primary-blue;
+    backdrop-filter: blur(10px);
+
+    &:hover {
+      background: rgba($primary-blue, 0.1);
+      color: $white;
+      border-color: $white;
+      transform: translateY(-3px);
+    }
+  }
+}
+
+// Общие стили для заголовков секций
+.section-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 60px;
+  color: $dark;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: $primary-blue;
+  }
+}
+
+// Скролл прогресс бар
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: $primary-blue;
+  z-index: 9999;
+  transition: width 0.2s ease;
+  width: 0%;
+}

@@ -10,6 +10,6 @@ services:
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./caddy/data:/data
       - ./caddy/config:/config
-      - ./frontend:/usr/share/caddy/frontend:ro
+      - ./dream-job-navigator/dist:/usr/share/caddy/frontend:ro
     restart: always
 

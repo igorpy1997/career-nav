@@ -1,0 +1,9 @@
+// Подключаем переменные и миксины
+@import './variables.scss';
+
+// Базовые стили
+@import './base.scss';
+
+// Секции
+@import './sections/hero.scss';
+@import './sections/sections.scss';
