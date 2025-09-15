@@ -1,5 +1,5 @@
 /**
- * Главный файл приложения
+ * Главный файл приложения - ИСПРАВЛЕННАЯ ВЕРСИЯ
  */
 
 // Импорты модулей
@@ -50,10 +50,10 @@ class App {
       // Прогресс скролла
       this.modules.scrollProgress = new ScrollProgress();
 
-      // Анимации появления
+      // Анимации появления (исправленные)
       this.modules.animations = new Animations();
 
-      // Анимации Hero секции
+      // Анимации Hero секции (исправленные)
       this.modules.heroAnimations = new HeroAnimations();
 
       // Навигация

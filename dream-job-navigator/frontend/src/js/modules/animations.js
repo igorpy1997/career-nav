@@ -29,7 +29,7 @@ export class Animations {
   prepareElements() {
     // Находим все элементы для анимации
     this.animatedElements = document.querySelectorAll(
-      '.audience-card, .timeline-item, .result-item, .partner-item, .important-card'
+      '.audience-card, .timeline-item, .result-card, .partner-card, .important-card'
     );
 
     // Подготавливаем начальное состояние
@@ -76,6 +76,14 @@ export class Animations {
     const target = parseInt(element.textContent.replace(/\D/g, '')) || 0;
     if (target === 0) return;
 
+    // Фиксируем размеры элемента перед анимацией
+    const currentHeight = element.offsetHeight;
+    const currentWidth = element.offsetWidth;
+    element.style.minHeight = currentHeight + 'px';
+    element.style.minWidth = currentWidth + 'px';
+    element.style.display = 'block';
+    element.style.textAlign = 'center';
+
     const duration = 2000;
     const step = target / (duration / 16);
     let current = 0;
@@ -90,6 +98,11 @@ export class Animations {
         current = target;
         clearInterval(timer);
         element.textContent = target + suffix;
+        // Убираем фиксированные размеры после анимации
+        setTimeout(() => {
+          element.style.minHeight = '';
+          element.style.minWidth = '';
+        }, 100);
       } else {
         element.textContent = Math.floor(current) + suffix;
       }
@@ -97,49 +110,14 @@ export class Animations {
   }
 
   addSpecialEffects(element) {
-    // Эффект для карточек аудитории
-    if (element.classList.contains('audience-card')) {
-      this.addHoverEffect(element);
-    }
-
     // Эффект для элементов таймлайна
     if (element.classList.contains('timeline-item')) {
       this.animateTimelineItem(element);
     }
 
-    // Эффект для партнеров
-    if (element.classList.contains('partner-item')) {
-      this.animatePartnerLogo(element);
-    }
-
     // Эффект для результатов
-    if (element.classList.contains('result-item')) {
+    if (element.classList.contains('result-card')) {
       this.addResultEffect(element);
-    }
-  }
-
-  addHoverEffect(card) {
-    const cardNumber = card.querySelector('.card-number');
-
-    card.addEventListener('mouseenter', () => {
-      if (cardNumber) {
-        cardNumber.style.animation = 'rotate 0.5s ease';
-      }
-      card.style.transform = 'translateY(-10px)';
-    });
-
-    card.addEventListener('mouseleave', () => {
-      if (cardNumber) {
-        cardNumber.style.animation = '';
-      }
-      card.style.transform = 'translateY(0)';
-    });
-
-    // Очищаем анимацию после завершения
-    if (cardNumber) {
-      cardNumber.addEventListener('animationend', () => {
-        cardNumber.style.animation = '';
-      });
     }
   }
 
@@ -171,31 +149,6 @@ export class Animations {
     }
   }
 
-  animatePartnerLogo(partner) {
-    const logo = partner.querySelector('.partner-logo');
-
-    if (logo) {
-      // Эффект "поднятия" логотипа
-      setTimeout(() => {
-        logo.style.transform = 'translateY(-5px)';
-        logo.style.transition = 'transform 0.3s ease';
-
-        setTimeout(() => {
-          logo.style.transform = 'translateY(0)';
-        }, 300);
-      }, 200);
-    }
-
-    // Добавляем эффект при наведении
-    partner.addEventListener('mouseenter', () => {
-      partner.style.transform = 'translateY(-5px) scale(1.02)';
-    });
-
-    partner.addEventListener('mouseleave', () => {
-      partner.style.transform = 'translateY(0) scale(1)';
-    });
-  }
-
   addResultEffect(result) {
     const icon = result.querySelector('.result-icon, .result-number');
 
@@ -209,17 +162,6 @@ export class Animations {
         icon.style.animation = '';
       });
     }
-
-    // Эффект при наведении
-    result.addEventListener('mouseenter', () => {
-      result.style.transform = 'scale(1.05)';
-      result.style.boxShadow = '0 10px 30px rgba(162, 203, 244, 0.2)';
-    });
-
-    result.addEventListener('mouseleave', () => {
-      result.style.transform = 'scale(1)';
-      result.style.boxShadow = '';
-    });
   }
 
   // Метод для добавления анимации к новым элементам (для динамического контента)
@@ -277,10 +219,5 @@ export class Animations {
 
     this.animatedElements = [];
     this.numbersAnimated.clear();
-
-    // Удаляем обработчики событий
-    document.querySelectorAll('.audience-card, .partner-item, .result-item').forEach(el => {
-      el.replaceWith(el.cloneNode(true));
-    });
   }
 }
