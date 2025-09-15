@@ -84,6 +84,7 @@ body {
   margin-bottom: 60px;
   color: $dark;
   position: relative;
+  z-index: 3;
 
   &::after {
     content: '';
@@ -107,4 +108,16 @@ body {
   z-index: 9999;
   transition: width 0.2s ease;
   width: 0%;
+}
+
+// Добавляем недостающую анимацию fadeInRight для фоновых изображений
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 0.08;
+    transform: translateX(0);
+  }
 }
