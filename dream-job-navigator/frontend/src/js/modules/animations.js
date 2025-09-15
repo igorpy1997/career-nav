@@ -1,5 +1,5 @@
 /**
- * Модуль для анимаций появления элементов
+ * Модуль для анимаций появления элементов - ИСПРАВЛЕННАЯ ВЕРСИЯ
  */
 export class Animations {
   constructor() {
@@ -76,35 +76,39 @@ export class Animations {
     const target = parseInt(element.textContent.replace(/\D/g, '')) || 0;
     if (target === 0) return;
 
-    // Фиксируем размеры элемента перед анимацией
-    const currentHeight = element.offsetHeight;
-    const currentWidth = element.offsetWidth;
-    element.style.minHeight = currentHeight + 'px';
-    element.style.minWidth = currentWidth + 'px';
-    element.style.display = 'block';
-    element.style.textAlign = 'center';
-
-    const duration = 2000;
-    const step = target / (duration / 16);
-    let current = 0;
-
     // Сохраняем оригинальный текст для суффикса
     const originalText = element.textContent;
     const suffix = originalText.includes('+') ? '+' : '';
+
+    // ИСПРАВЛЕНИЕ: Создаем внутренний span для анимации
+    const animatedSpan = document.createElement('span');
+    animatedSpan.style.display = 'inline-block';
+    animatedSpan.style.minWidth = element.offsetWidth + 'px';
+    animatedSpan.textContent = '0' + suffix;
+
+    // Очищаем элемент и добавляем span
+    element.textContent = '';
+    element.appendChild(animatedSpan);
+
+    // Запускаем анимацию
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
 
     const timer = setInterval(() => {
       current += step;
       if (current >= target) {
         current = target;
         clearInterval(timer);
-        element.textContent = target + suffix;
-        // Убираем фиксированные размеры после анимации
+        animatedSpan.textContent = target.toLocaleString() + suffix;
+
+        // Добавляем эффект завершения
+        element.style.transform = 'scale(1.1)';
         setTimeout(() => {
-          element.style.minHeight = '';
-          element.style.minWidth = '';
-        }, 100);
+          element.style.transform = 'scale(1)';
+        }, 200);
       } else {
-        element.textContent = Math.floor(current) + suffix;
+        animatedSpan.textContent = Math.floor(current).toLocaleString() + suffix;
       }
     }, 16);
   }
@@ -152,8 +156,8 @@ export class Animations {
   addResultEffect(result) {
     const icon = result.querySelector('.result-icon, .result-number');
 
-    if (icon) {
-      // Пульсирующий эффект для иконок/чисел
+    if (icon && !icon.classList.contains('result-number')) {
+      // Пульсирующий эффект только для иконок (не для чисел)
       setTimeout(() => {
         icon.style.animation = 'pulse 1s ease';
       }, 300);

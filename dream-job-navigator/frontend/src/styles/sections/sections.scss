@@ -256,6 +256,12 @@
   position: relative;
   z-index: 3;
   @include fadeInUp();
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba($dark, 0.1);
+  }
 
   p {
     color: $text-dark;
@@ -264,19 +270,29 @@
   }
 }
 
+// ИСПРАВЛЕННЫЕ СТИЛИ ДЛЯ ЧИСЕЛ
 .result-number {
   font-size: 3rem;
   font-weight: bold;
   color: $primary-blue;
   margin-bottom: 15px;
-  display: block;
-  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
   line-height: 1;
-  text-align: center;
+  position: relative;
+  transition: transform 0.2s ease;
+
+  // Фиксируем позицию для span внутри
+  span {
+    display: inline-block;
+    text-align: center;
+  }
 
   @include mobile {
     font-size: 2.5rem;
-    min-height: 50px;
+    min-height: 60px;
   }
 }
 
@@ -284,6 +300,23 @@
   font-size: 3rem;
   color: $primary-blue;
   margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
+}
+
+// Анимация пульсации для иконок
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Partners */
@@ -362,6 +395,12 @@
   position: relative;
   z-index: 3;
   @include fadeInUp();
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba($dark, 0.1);
+  }
 
   .partner-logo {
     width: 100%;
@@ -377,7 +416,12 @@
       width: auto;
       height: auto;
       object-fit: contain;
+      transition: transform 0.3s ease;
     }
+  }
+
+  &:hover .partner-logo img {
+    transform: scale(1.05);
   }
 
   .partner-info {
@@ -439,6 +483,11 @@
 .visegrad-logo {
   display: inline-block;
   text-decoration: none;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 
   .logo-placeholder {
     width: 200px;
@@ -450,5 +499,11 @@
     justify-content: center;
     border-radius: 10px;
     font-weight: bold;
+    transition: background 0.3s ease;
+  }
+
+  &:hover .logo-placeholder {
+    background: $primary-blue;
+    color: $white;
   }
 }
